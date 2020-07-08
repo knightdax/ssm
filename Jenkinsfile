@@ -2,13 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Test') {
+        stage('Deploy') {
+            when {
+              expression {
+                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+              }
+            }
             steps {
-                /* `make check` 在测试失败后返回非零的退出码；
-                * 使用 `true` 允许流水线继续进行
-                */
-                sh 'make check || true' 
-                junit '**/target/*.xml' 
+                sh 'make publish'
             }
         }
     }
