@@ -1,15 +1,11 @@
 pipeline {
-    agent any
-
+    agent {
+        docker { image 'node:7-alpine' }
+    }
     stages {
-        stage('Deploy') {
-            when {
-              expression {
-                currentBuild.result == null || currentBuild.result == 'SUCCESS' 
-              }
-            }
+        stage('Test') {
             steps {
-                sh 'make publish'
+                sh 'node --version'
             }
         }
     }
