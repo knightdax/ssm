@@ -1,22 +1,13 @@
 #!/usr/bin/env groovy
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Build') {
-        steps {
-            echo 'Buildi..'
+    stages {
+        stage('Build') {
+            steps {
+                sh 'make' 
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
+            }
         }
     }
-    stage('Test') {
-        steps {
-            echo 'Testing..'
-        }
-    }
-    stage('Deploy') {
-        steps {
-            echo 'Deploying....'
-        }
-    }
-  }
 }
